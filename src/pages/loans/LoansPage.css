@@ -1,0 +1,141 @@
+h2 {
+  text-align: center;
+  color: #D6EEEE;
+}
+
+html {
+  font-family: "helvetica neue", helvetica, arial, sans-serif;
+}
+thead th,
+tfoot th {
+  font-family: "Rock Salt", cursive;
+}
+
+th {
+  letter-spacing: 2px;
+}
+
+td {
+  letter-spacing: 1px;
+}
+
+tbody td {
+  text-align: center;
+}
+
+tfoot th {
+  text-align: right;
+}
+
+table {
+  table-layout: fixed;
+  width: 95%; /* Reduced width to 95% */
+  border-collapse: collapse;
+  border: 3px solid purple;
+  margin-left:150px;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  table {
+      width: 100%;
+      margin-left: 60px; /* Full width on small screens */
+  }
+
+  .small-table {
+      width: 90%; /* Slightly smaller width for small tables on small screens */
+      margin-left: auto;
+      margin-right: auto;
+  }
+  table thead{
+    display: none;
+  }
+  table, tbody, tr, td{
+    display: block;
+    width: 100%;
+  }
+  tr{
+    margin-bottom: 15px;
+  }
+  tr, td{
+    text-align: right;
+    padding-left: 50px;
+    position: relative;
+  }
+}
+
+thead th:nth-child(1) {
+  width: 2%;
+}
+
+thead th:nth-child(2) {
+  width: 2%;
+}
+
+thead th:nth-child(3) {
+  width: 7%;
+}
+
+thead th:nth-child(4) {
+  width: 3%;
+}
+thead th:nth-child(5) {
+  width: 7%;
+}
+thead th:nth-child(5) {
+  width: 7%;
+}
+thead th:nth-child(6) {
+  width: 7%;
+}
+thead th:nth-child(7) {
+  width: 7%;
+}
+thead th:nth-child(8) {
+  width: 3%;
+  padding: 3px;
+}
+th,
+td {
+  padding: 10px;
+}
+
+tr:hover {
+  background-color: #ffff99;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  list-style-type: none;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  display: block;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page-link:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
