@@ -14,7 +14,7 @@ const LoanPay = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!name || !amount || !document) {
       setError('All fields are required.');
       return;
@@ -26,12 +26,11 @@ const LoanPay = () => {
     formData.append('document', document);
 
     try {
-      const response = await fetch('http://localhost:200/api/payment/pay', {
+      const response = await fetch('http://localhost:3000/api/payment/pay', {
         method: 'POST',
         body: formData,
       });
 
-      // Check if the response is JSON
       const contentType = response.headers.get('content-type');
       if (!response.ok) {
         if (contentType && contentType.indexOf('application/json') !== -1) {

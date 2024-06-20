@@ -70,7 +70,7 @@ export const SeeAllMembers = () => {
                   <td>{item.name}</td>
                   <td>{item.email}</td>
                   <td>{item.nId}</td>
-                  <td>{item.phoneNumber}</td>
+                  <td>{item.phone}</td>
                   <td>{item.photo}</td>
                 </tr>
               ))}

@@ -8,6 +8,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 function Dash() {
   const [membersCount, setMembersCount] = useState(0);
   const [loansCount, setLoansCount] = useState(0);
+  const [contactsCount, setContactsCount] = useState(0);
   const [savingsAmount, setSavingsAmount] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -35,6 +36,17 @@ function Dash() {
         console.error("Error fetching loans data:", error);
       }
     };
+    const fetchContacts = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get("http://localhost:200/api/contact/getall", {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        setContactsCount(response.data.length);
+      } catch (error) {
+        console.error("Error fetching contacts data:", error);
+      }
+    };
 
     const fetchSavings = async () => {
       try {
@@ -50,7 +62,7 @@ function Dash() {
     };
 
     const fetchData = async () => {
-      await Promise.all([fetchMembers(), fetchLoans(), fetchSavings()]);
+      await Promise.all([fetchMembers(), fetchLoans(),fetchContacts(), fetchSavings()]);
       setLoading(false);
     };
 
@@ -99,10 +111,10 @@ function Dash() {
         </div>
         <div className='card'>
           <div className='card-inner'>
-            <h3>ALERTS</h3>
-            <BsFillBellFill className='card_icon' />
+            <h3>INFO..</h3>
+           <a href='/gettingcontacts'> <BsFillBellFill className='card_icon' /></a>
           </div>
-          <h1>12</h1>
+          <h1>{contactsCount}</h1>
         </div>
       </div>
 

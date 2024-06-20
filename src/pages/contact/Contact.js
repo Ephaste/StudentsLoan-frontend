@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from "../auth/auth.module.scss";
+import styles from '../auth/auth.module.scss';
 import Card from '../../components/card/Card';
 
 const Contact = () => {
@@ -38,13 +38,12 @@ const Contact = () => {
 
       if (response.ok) {
         alert('Message sent successfully!');
-
-        console.log(formData);
+        setFormData({ name: '', email: '', message: '', document: null });
       } else {
-        alert('Failed to send message.');
+        const errorData = await response.json();
+        alert('Failed to send message: ' + errorData.error);
       }
     } catch (error) {
-      console.error('Error:', error);
       alert('Error sending message.');
     }
   };

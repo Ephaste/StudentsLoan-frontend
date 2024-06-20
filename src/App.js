@@ -16,7 +16,7 @@ import AdminLayout from './components/shared/AdminLayout';
 import MemberLayout from './components/shared/MemberLayout';
 import SeeMemberSavings from './pages/funds/SeeMemberSavings';
 import LoansPaid from './pages/loans/LoansPaid.jsx';
-
+import GettingContacts from './pages/contact/GettingContacts.js';
 
 function App() {
   return (
@@ -41,6 +41,7 @@ function App() {
           <Route path="/seeallmembers" element={<SeeAllMembers />} />
           <Route path='/loansupdate' element ={<LoansUpdate />}/>
           <Route path='/loanspaid' element ={<LoansPaid />}/>
+          <Route path='/gettingcontacts' element ={<GettingContacts/>}/>
         </Route>
 
         <Route path="" element={<MemberLayout />}>
