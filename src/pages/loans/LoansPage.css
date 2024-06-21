@@ -28,7 +28,7 @@ tfoot th {
 }
 
 table {
-  table-layout: fixed;
+  /* table-layout: fixed; */
   width: 95%; /* Reduced width to 95% */
   border-collapse: collapse;
   border: 3px solid purple;

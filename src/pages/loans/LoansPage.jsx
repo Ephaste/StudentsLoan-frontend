@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import styles from "./LoansPage.css";
 
@@ -7,6 +7,7 @@ export const LoansPage = () => {
   const [loansData, setLoansData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 7;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLoans = async () => {
@@ -48,6 +49,14 @@ export const LoansPage = () => {
     }
   };
 
+  const handleRowClick = (loan) => {
+    if (loan) {
+      navigate("/loansupdate", { state: { loan } });
+    } else {
+      console.error("Loan data is missing");
+    }
+  };
+
   return (
     <div className="transactions-container">
       <section className="table__body">
@@ -67,7 +76,7 @@ export const LoansPage = () => {
           </thead>
           <tbody>
             {currentRecords.map((item, indexNo) => (
-              <tr key={item._id}>
+              <tr key={item._id} onClick={() => handleRowClick(item)}>
                 <td>{firstIndex + indexNo + 1}</td>
                 <td>
                   <Link 
@@ -82,7 +91,7 @@ export const LoansPage = () => {
                   </Link>
                 </td>
                 <td>{item.nId}</td>
-                <td>{item.loan}Frw</td>
+                <td>{item.loan} Frw</td>
                 <td>{item.months} months</td>
                 <td>{item.paymentWay}</td>
                 <td>{item.amount}</td>

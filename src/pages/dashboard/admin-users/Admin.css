@@ -59,17 +59,17 @@ body  {
   
   /* Sidebar  */
   #sidebar {
-    position: fixed;
     grid-area: sidebar;
-    height: 100%;
     background-color: #263043;
-    overflow-y: 20;
+    overflow-y: auto;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     width: 150px;
     padding-bottom: 0%;
-    height: 600px;
-  }
+    min-height: 100%; /* Ensure it covers at least the height of the content */
+    max-height: 100vh; /* Prevent it from exceeding the viewport height */
+}
+
   
   .sidebar-title {
     display: flex;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import styles from "./LoansPage.css";
 
@@ -7,6 +7,7 @@ const SeeClientLoans = () => {
   const [loansData, setLoansData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 7;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClientLoans = async () => {
@@ -48,6 +49,10 @@ const SeeClientLoans = () => {
     }
   };
 
+  const handleRowClick = (loan) => {
+    navigate("/loanpaying", { state: { loan } });
+  };
+
   if (loansData.length === 0) {
     return <p>No loans data available.</p>;
   }
@@ -71,7 +76,7 @@ const SeeClientLoans = () => {
           </thead>
           <tbody>
             {currentRecords.map((item, indexNo) => (
-              <tr key={item._id}>
+              <tr key={item._id} onClick={() => handleRowClick(item)}>
                 <td>{firstIndex + indexNo + 1}</td>
                 <td>
                   <Link 

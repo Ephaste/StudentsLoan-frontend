@@ -1,38 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from "../auth/auth.module.scss";
 import Card from '../../components/card/Card';
 import axios from 'axios';
 
-const LoansUpdate = ({ loanId }) => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    nId: '',
-    loan: '',
-    months: '',
-    paymentMethod: '',
-    status: '',
-    amount: '',
-  });
+const LoansUpdate = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const loan = location.state?.loan;
 
   useEffect(() => {
-    const fetchLoanDetails = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(
-          `http://localhost:200/api/loans/${loanId}`,
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
-        setFormData(response.data);
-      } catch (error) {
-        console.error("Error fetching loan details:", error.response);
-      }
-    };
-    fetchLoanDetails();
-  }, [loanId]);
+    if (!loan) {
+      navigate('/loanspage');
+    }
+  }, [loan, navigate]);
+
+  const [formData, setFormData] = useState({
+    fullName: loan?.name || '',
+    nId: loan?.nId || '',
+    loan: loan?.loan || '',
+    months: loan?.months || '',
+    paymentMethod: loan?.paymentWay || '',
+    status: loan?.status || '',
+    amount: loan?.amount || '',
+  });
 
   const handleStatusChange = (e) => {
     const { value } = e.target;
@@ -46,7 +37,7 @@ const LoansUpdate = ({ loanId }) => {
 
     try {
       await axios.put(
-        `http://localhost:200/api/loans/${loanId}`,
+        `http://localhost:200/api/loans/update/${loan._id}`,
         dataToSend,
         {
           headers: {
@@ -54,15 +45,16 @@ const LoansUpdate = ({ loanId }) => {
           }
         }
       );
-      // Handle success (e.g., show a success message or redirect)
-      // alert("Loan status updated successfully");
-      // window.location.href = "admin-dashboard";
+      alert("Loan status updated successfully");
+      navigate("/loanspage");
     } catch (error) {
-      // Handle error (e.g., show an error message)
       console.error("Error updating loan status:", error.response);
-      // notifyManager.failure(error.response.data.message);
     }
   };
+
+  if (!loan) {
+    return null; // or render a fallback UI
+  }
 
   return (
     <section className={`container ${styles.auth}`}>

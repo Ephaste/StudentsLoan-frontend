@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../loans/LoansPage.css";
 import axios from "axios";
+import { useReactToPrint } from "react-to-print";
+
+
 
 export const SeeAllMembers = () => {
+
+  const componentPDF = useRef();
   const [currentPage, setCurrentPage] = useState(1);
   const [membersData, setMembersData] = useState([]);
   const recordsPerPage = 7;
@@ -46,10 +51,15 @@ export const SeeAllMembers = () => {
       setCurrentPage(currentPage + 1);
     }
   };
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Members Table",
+    onAfterPrint: ()=> alert("Table saved in PDF")
+  })
 
   return (
     <>
-      <div className="transactions-container">
+      <div className="transactions-container" ref={componentPDF}>
         <section className="table__body">
           <h2>LIST OF ALL MEMBERS</h2>
           <table className="center">
@@ -89,10 +99,17 @@ export const SeeAllMembers = () => {
               <li className="page-item">
                 <a href="#" className="page-link" onClick={nextPage}>Next</a>
               </li>
+              <li className="page-item">
+              <button type="submit" className="--btn --btn-primary --btn-block"  onClick={generatePDF}> 
+              PDF
+            </button>
+              </li>
             </ul>
           </nav>
         </section>
+        
       </div>
+     
     </>
   );
 };

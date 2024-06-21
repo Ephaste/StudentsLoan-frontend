@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from 'axios';
-import styles from "./LoansPage.css";
 
 export const LoansPaid = () => {
   const [loansData, setLoansData] = useState([]);
@@ -12,11 +10,16 @@ export const LoansPaid = () => {
     const fetchLoans = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No token found');
+        }
+        
         const response = await axios.get("http://localhost:200/api/payment/getall", {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
+        
         setLoansData(response.data);
       } catch (error) {
         console.error("Error fetching loans data:", error);
@@ -32,17 +35,20 @@ export const LoansPaid = () => {
   const nPage = Math.ceil(loansData.length / recordsPerPage);
   const numbers = [...Array(nPage + 1).keys()].slice(1);
 
-  const prePage = () => {
+  const prePage = (e) => {
+    e.preventDefault();
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  const changeCPage = (id) => {
+  const changeCPage = (e, id) => {
+    e.preventDefault();
     setCurrentPage(id);
   };
 
-  const nextPage = () => {
+  const nextPage = (e) => {
+    e.preventDefault();
     if (currentPage !== nPage) {
       setCurrentPage(currentPage + 1);
     }
@@ -66,11 +72,15 @@ export const LoansPaid = () => {
               <tr key={item._id}>
                 <td>{firstIndex + indexNo + 1}</td>
                 <td>{item.name}</td>
-                <td>{item.amount}</td>
+                <td>{item.amount} Frw</td>
                 <td>
-                  <a href={item.document} target="_blank" rel="noopener noreferrer">
-                    View Document
-                  </a>
+                  {item.document ? (
+                    <a href={item.document} target="_blank" rel="noopener noreferrer">
+                      View Slip
+                    </a>
+                  ) : (
+                    "No slip"
+                  )}
                 </td>
               </tr>
             ))}
@@ -83,7 +93,7 @@ export const LoansPaid = () => {
             </li>
             {numbers.map((n) => (
               <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={n}>
-                <a href="#" className="page-link" onClick={() => changeCPage(n)}>{n}</a>
+                <a href="#" className="page-link" onClick={(e) => changeCPage(e, n)}>{n}</a>
               </li>
             ))}
             <li className="page-item">

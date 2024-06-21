@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from "../auth/auth.module.scss";
 import Card from '../../components/card/Card';
 
 const LoanPay = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const loan = location.state?.loan || {};
 
   const [name, setName] = useState(loan.name || '');
-  const [amount, setAmount] = useState(loan.paymentAmount || '');
+  const [amount, setAmount] = useState(loan.amount || '');
   const [document, setDocument] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     if (!name || !amount || !document) {
       setError('All fields are required.');
       return;
@@ -26,7 +27,7 @@ const LoanPay = () => {
     formData.append('document', document);
 
     try {
-      const response = await fetch('http://localhost:3000/api/payment/pay', {
+      const response = await fetch('http://localhost:200/api/payment/pay', {
         method: 'POST',
         body: formData,
       });
@@ -44,6 +45,7 @@ const LoanPay = () => {
       const data = await response.json();
       console.log('Success:', data);
       alert("Paid!");
+      navigate("/loanspage");
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred while submitting the form: ' + error.message);
