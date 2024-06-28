@@ -5,6 +5,7 @@ import DashHeader from '../../pages/dashboard/admin-users/DashHeader';
 import Footer from '../footer/Footer';
 
 const MemberLayout = () => {
+  
   return (
     <div>
       <DashHeader />
@@ -12,7 +13,6 @@ const MemberLayout = () => {
         <SidebarMember />
           <Outlet />
       </div>
-      <Footer />
     </div>
   );
 }

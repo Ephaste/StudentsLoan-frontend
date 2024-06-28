@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-const SidebarMember = () => {
+const SidebarMember = ({OpenSidebarToggle, OpenSidebar}) => {
   const  navigate = useNavigate();
   const handleLogout = (e) => {
     e.preventDefault();
@@ -28,12 +28,12 @@ const SidebarMember = () => {
   };
 
   return (
- <aside id='sidebar'>
+ <aside id='sidebar' className={OpenSidebarToggle ? "sidebar-responsive": ""}>
     <div className='sidebar-title'>
         <div className='sidebar-brand'>
         <PiStudentBold size={60}/>
         </div>
-<span className='icon close_icon'>X</span>
+<span className='icon close_icon' onClick={OpenSidebar}>X</span>
     </div>
     <ul className='sidebar-list'>
         <li className='sidebar-list-item'>

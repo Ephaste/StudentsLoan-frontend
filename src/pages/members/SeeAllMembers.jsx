@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../loans/LoansPage.css";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 
-
-
 export const SeeAllMembers = () => {
-
   const componentPDF = useRef();
   const [currentPage, setCurrentPage] = useState(1);
   const [membersData, setMembersData] = useState([]);
   const recordsPerPage = 7;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -29,6 +28,10 @@ export const SeeAllMembers = () => {
 
     fetchMembers();
   }, []);
+
+  const handleRowClick = (member) => {
+    navigate('/updateuser', { state: { member } });
+  };
 
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
@@ -51,41 +54,52 @@ export const SeeAllMembers = () => {
       setCurrentPage(currentPage + 1);
     }
   };
+  
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
     documentTitle: "Members Table",
-    onAfterPrint: ()=> alert("Table saved in PDF")
-  })
+    onAfterPrint: () => alert("Table saved in PDF")
+  });
 
   return (
     <>
-      <div className="transactions-container" ref={componentPDF}>
+      <div className="transactions-container">
         <section className="table__body">
-          <h2>LIST OF ALL MEMBERS</h2>
-          <table className="center">
-            <thead>
-              <tr>
-                <th style={{ color: "#000" }}>Number</th>
-                <th style={{ color: "#000" }}>Names</th>
-                <th style={{ color: "#000" }}>Email</th>
-                <th style={{ color: "#000" }}>National ID</th>
-                <th style={{ color: "#000" }}>Phone number</th>
-                <th style={{ color: "#000" }}>Passport</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentRecords.map((item, indexNo) => (
-                <tr key={item._id}>
-                  <td>{firstIndex + indexNo + 1}</td>
-                  <td>{item.name}</td>
-                  <td>{item.email}</td>
-                  <td>{item.nId}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.photo}</td>
+          <div ref={componentPDF}>
+            <h2>LIST OF ALL MEMBERS</h2>
+            <table className="center">
+              <thead>
+                <tr>
+                  <th style={{ color: "#000" }}>Number</th>
+                  <th style={{ color: "#000" }}>Names</th>
+                  <th style={{ color: "#000" }}>Email</th>
+                  <th style={{ color: "#000" }}>Reg number</th>
+                  <th style={{ color: "#000" }}>Phone number</th>
+                  <th style={{ color: "#000" }}>Approved</th>
+                  <th style={{ color: "#000" }}>Passport</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {currentRecords.map((item, indexNo) => (
+                  <tr key={item._id} onClick={() => handleRowClick(item)}>
+                    <td>{firstIndex + indexNo + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.regno}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.approved}</td>
+                    <td>
+                      {item.photo ? (
+                        <img src={`http://localhost:200${item.photo}`} alt="Passport" width="50" height="50" />
+                      ) : (
+                        "No Image"
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <nav>
             <ul className="pagination">
               <li className="page-item">
@@ -100,16 +114,14 @@ export const SeeAllMembers = () => {
                 <a href="#" className="page-link" onClick={nextPage}>Next</a>
               </li>
               <li className="page-item">
-              <button type="submit" className="--btn --btn-primary --btn-block"  onClick={generatePDF}> 
-              PDF
-            </button>
+                <button type="submit" className="--btn --btn-primary --btn-block" onClick={generatePDF}>
+                  PDF
+                </button>
               </li>
             </ul>
           </nav>
         </section>
-        
       </div>
-     
     </>
   );
 };

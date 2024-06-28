@@ -30,16 +30,23 @@ const Login = () => {
       console.log('Server response:', res);
 
       if (res.data && res.data.token) {
-       // alert("Login successful");
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userdata", JSON.stringify(res.data));
 
-        console.log('Data:____------=>Goo', res.data);
+        console.log('Data:', res.data);
+        console.log('Role:', res.data.role);
+        console.log('Approved:', res.data.approved);
 
         if (res.data.role === "admin") {
           navigate("/dashboardadmin");
         } else if (res.data.role === "member") {
-          navigate("/dashboardmember");
+          if (res.data.approved === "yes") {
+            navigate("/dashboardmember");
+          } else {
+            alert("Wait for the admin to approve your account.");
+          }
+        } else {
+          alert("Login failed: Invalid response from server");
         }
       } else {
         alert("Login failed: Invalid response from server");

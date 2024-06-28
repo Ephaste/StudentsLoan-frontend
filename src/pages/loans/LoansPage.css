@@ -28,12 +28,18 @@ tfoot th {
 }
 
 table {
-  /* table-layout: fixed; */
-  width: 95%; /* Reduced width to 95% */
+  table-layout: fixed;
+  width: 90%; /* Reduced width to 95% */
   border-collapse: collapse;
   border: 3px solid purple;
   margin-left:150px;
-  margin-right: auto;
+  margin-right: 10px;
+}
+.highlight {
+  background-color: #ffdddd; /* Light red background */
+}
+.savings{
+  margin-left: 200px;
 }
 
 @media (max-width: 768px) {
@@ -69,7 +75,7 @@ thead th:nth-child(1) {
 }
 
 thead th:nth-child(2) {
-  width: 2%;
+  width: 10%;
 }
 
 thead th:nth-child(3) {
@@ -86,18 +92,27 @@ thead th:nth-child(5) {
   width: 7%;
 }
 thead th:nth-child(6) {
-  width: 7%;
+  width: 3%;
 }
 thead th:nth-child(7) {
   width: 7%;
 }
 thead th:nth-child(8) {
   width: 3%;
-  padding: 3px;
+}
+thead th:nth-child(9) {
+  width: 3%;
+}
+thead th:nth-child(10) {
+  width: 7%;
+}
+thead th:nth-child(11) {
+  width: 7%;
 }
 th,
 td {
   padding: 10px;
+  font-size: 10px;
 }
 
 tr:hover {

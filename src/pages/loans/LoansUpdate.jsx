@@ -9,21 +9,50 @@ const LoansUpdate = () => {
   const navigate = useNavigate();
   const loan = location.state?.loan;
 
+  const [formData, setFormData] = useState({
+    fullName: '',
+    nId: '',
+    loan: '',
+    months: '',
+    paymentMethod: '',
+    status: '',
+    amount: '',
+    remainingAmount: '',
+    totalPaid: '',
+  });
+
   useEffect(() => {
     if (!loan) {
       navigate('/loanspage');
+    } else {
+      // Fetch the latest loan data to ensure we have up-to-date information
+      const fetchLoanData = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await axios.get(`http://localhost:200/api/loans/${loan._id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const updatedLoan = response.data;
+          setFormData({
+            fullName: updatedLoan.name,
+            nId: updatedLoan.nId,
+            loan: updatedLoan.loan,
+            months: updatedLoan.months,
+            paymentMethod: updatedLoan.paymentWay,
+            status: updatedLoan.status,
+            amount: updatedLoan.amount,
+            remainingAmount: updatedLoan.remainingAmount,
+            totalPaid: updatedLoan.totalPaid,
+          });
+        } catch (error) {
+          console.error("Error fetching loan data:", error);
+        }
+      };
+      fetchLoanData();
     }
   }, [loan, navigate]);
-
-  const [formData, setFormData] = useState({
-    fullName: loan?.name || '',
-    nId: loan?.nId || '',
-    loan: loan?.loan || '',
-    months: loan?.months || '',
-    paymentMethod: loan?.paymentWay || '',
-    status: loan?.status || '',
-    amount: loan?.amount || '',
-  });
 
   const handleStatusChange = (e) => {
     const { value } = e.target;
@@ -53,7 +82,7 @@ const LoansUpdate = () => {
   };
 
   if (!loan) {
-    return null; // or render a fallback UI
+    return null;
   }
 
   return (
@@ -62,60 +91,6 @@ const LoansUpdate = () => {
         <div className={styles.form}>
           <h2>UPDATE LOAN STATUS</h2>
           <form onSubmit={updateLoan}>
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Full Name"
-              value={formData.fullName}
-              readOnly
-            />
-            <input
-              type="number"
-              name="nId"
-              placeholder="ID"
-              value={formData.nId}
-              readOnly
-            />
-            <input
-              type="number"
-              name="loan"
-              placeholder="Requested Loan"
-              value={formData.loan}
-              readOnly
-            />
-            <div>
-              <p>Payment Period:</p>
-              <select
-                id="months"
-                name="months"
-                value={formData.months}
-                readOnly
-              >
-                <option value="3">3 Months</option>
-                <option value="6">6 Months</option>
-                <option value="9">9 Months</option>
-              </select>
-            </div>
-            <div>
-              <p>Payment Method:</p>
-              <select
-                id="paymentMethod"
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                readOnly
-              >
-                <option value="">Installment</option>
-                <option value="oneTime">At one time</option>
-              </select>
-            </div>
-            <p>Amount to be Paid:</p>
-            <input
-              type="number"
-              name="amount"
-              placeholder="Amount"
-              value={formData.amount}
-              readOnly
-            />
             <div>
               <p>Status:</p>
               <select
@@ -128,6 +103,11 @@ const LoansUpdate = () => {
                 <option value="pending">Pending</option>
                 <option value="approved">Approved</option>
                 <option value="rejected">Rejected</option>
+                <option value="paid">Paid</option>
+                <option value="inst1-paid">Install1 Paid</option>
+                <option value="inst2-paid">Install2 Paid</option>
+                <option value="inst3-paid">Install3 Paid</option>
+                <option value="inst4-paid">Install4 Paid</option>
               </select>
             </div>
             <button type="submit" className="--btn --btn-primary --btn-block">

@@ -76,7 +76,7 @@ const GettingContacts = () => {
                 <td>{item.message}</td>
                 <td>
                   {item.document ? (
-                    <a href={item.document} target="_blank" rel="noopener noreferrer">View Document</a>
+                    <a href={`http://localhost:200${item.document}`} target="_blank" rel="noopener noreferrer">View Document</a>
                   ) : (
                     'No Document'
                   )}

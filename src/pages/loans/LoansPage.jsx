@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import styles from "./LoansPage.css";
+import { useReactToPrint } from "react-to-print";
+import styles from "./LoansPage.css"; // Ensure you have the correct path to your CSS file
 
 export const LoansPage = () => {
   const [loansData, setLoansData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 7;
   const navigate = useNavigate();
+  const componentPDF = useRef();
 
   useEffect(() => {
     const fetchLoans = async () => {
@@ -26,6 +28,20 @@ export const LoansPage = () => {
 
     fetchLoans();
   }, []);
+
+  const handleRowClick = (loan) => {
+    if (loan) {
+      navigate("/loansupdate", { state: { loan } });
+    } else {
+      console.error("Loan data is missing");
+    }
+  };
+
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Loans Table",
+    onAfterPrint: () => alert("Table saved in PDF")
+  });
 
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
@@ -49,29 +65,24 @@ export const LoansPage = () => {
     }
   };
 
-  const handleRowClick = (loan) => {
-    if (loan) {
-      navigate("/loansupdate", { state: { loan } });
-    } else {
-      console.error("Loan data is missing");
-    }
-  };
-
   return (
     <div className="transactions-container">
-      <section className="table__body">
+      <section className="table__body" ref={componentPDF}>
         <h2>LOANS APPLIED BY MEMBERS</h2>
         <table className="center">
           <thead>
             <tr>
               <th style={{ color: "#000" }}>Number</th>
               <th style={{ color: "#000" }}>Names</th>
-              <th style={{ color: "#000" }}>National ID</th>
+              <th style={{ color: "#000" }}>Reg number</th>
               <th style={{ color: "#000" }}>Loan</th>
               <th style={{ color: "#000" }}>Duration</th>
               <th style={{ color: "#000" }}>Payment Way</th>
               <th style={{ color: "#000" }}>Amount</th>
               <th style={{ color: "#000" }}>Status</th>
+              <th style={{ color: "#000" }}>Total Paid</th>
+              <th style={{ color: "#000" }}>Remaining Amount</th>
+              <th style={{ color: "#000" }}>Created Date</th> {/* New Column */}
             </tr>
           </thead>
           <tbody>
@@ -90,32 +101,40 @@ export const LoansPage = () => {
                     {item.name}
                   </Link>
                 </td>
-                <td>{item.nId}</td>
+                <td>{item.regno}</td>
                 <td>{item.loan} Frw</td>
                 <td>{item.months} months</td>
                 <td>{item.paymentWay}</td>
                 <td>{item.amount}</td>
                 <td>{item.status}</td>
+                <td>{item.totalPaid}</td>
+                <td>{item.remainingAmount}</td>
+                <td>{new Date(item.createdAt).toLocaleDateString()}</td> 
               </tr>
             ))}
           </tbody>
         </table>
-        <nav>
-          <ul className="pagination">
-            <li className="page-item">
-              <a href="#" className="page-link" onClick={prePage}>Prev</a>
-            </li>
-            {numbers.map((n) => (
-              <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={n}>
-                <a href="#" className="page-link" onClick={() => changeCPage(n)}>{n}</a>
-              </li>
-            ))}
-            <li className="page-item">
-              <a href="#" className="page-link" onClick={nextPage}>Next</a>
-            </li>
-          </ul>
-        </nav>
       </section>
+      <nav>
+        <ul className="pagination">
+          <li className="page-item">
+            <a href="#" className="page-link" onClick={prePage}>Prev</a>
+          </li>
+          {numbers.map((n) => (
+            <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={n}>
+              <a href="#" className="page-link" onClick={() => changeCPage(n)}>{n}</a>
+            </li>
+          ))}
+          <li className="page-item">
+            <a href="#" className="page-link" onClick={nextPage}>Next</a>
+          </li>
+          <li> 
+            <button type="submit" className="--btn --btn-primary --btn-block" onClick={generatePDF}>
+              PDF
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

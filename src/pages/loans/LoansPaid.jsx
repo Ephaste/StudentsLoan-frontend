@@ -75,7 +75,7 @@ export const LoansPaid = () => {
                 <td>{item.amount} Frw</td>
                 <td>
                   {item.document ? (
-                    <a href={item.document} target="_blank" rel="noopener noreferrer">
+                    <a href={`http://localhost:200${item.document}`} target="_blank" rel="noopener noreferrer">
                       View Slip
                     </a>
                   ) : (

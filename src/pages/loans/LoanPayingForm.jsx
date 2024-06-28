@@ -9,7 +9,7 @@ const LoanPay = () => {
   const loan = location.state?.loan || {};
 
   const [name, setName] = useState(loan.name || '');
-  const [amount, setAmount] = useState(loan.amount || '');
+  const [amount, setAmount] = useState(loan.remainingAmount || '');
   const [document, setDocument] = useState(null);
   const [error, setError] = useState(null);
 
@@ -44,8 +44,10 @@ const LoanPay = () => {
 
       const data = await response.json();
       console.log('Success:', data);
-      alert("Paid!");
-      navigate("/loanspage");
+      alert(data.message || "Your payment is under review.");
+      
+        navigate("/loansmemberpage"); // Redirect to the loans member page
+     
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred while submitting the form: ' + error.message);

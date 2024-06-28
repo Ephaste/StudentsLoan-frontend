@@ -59,6 +59,7 @@ body  {
   
   /* Sidebar  */
   #sidebar {
+    position: fixed;
     grid-area: sidebar;
     background-color: #263043;
     overflow-y: auto;
@@ -136,12 +137,12 @@ body  {
     overflow-y: auto; 
     color: rgba(255, 255, 255, 0.95);
     padding: 20px;
-  color: rgba(255, 255, 255, 0.95);
+     color: rgba(255, 255, 255, 0.95);
   
   justify-content: center; /* Center content horizontally */
    align-items: center; 
    text-align: center; 
-   margin-left: 160px;
+   margin-left: 300px;
       }
   
   .main-title {

@@ -66,12 +66,15 @@ const SeeClientLoans = () => {
             <tr>
               <th style={{ color: "#000" }}>Number</th>
               <th style={{ color: "#000" }}>Names</th>
-              <th style={{ color: "#000" }}>National ID</th>
+              <th style={{ color: "#000" }}>Reg number</th>
               <th style={{ color: "#000" }}>Loan</th>
               <th style={{ color: "#000" }}>Duration</th>
               <th style={{ color: "#000" }}>Payment Way</th>
               <th style={{ color: "#000" }}>Amount</th>
               <th style={{ color: "#000" }}>Status</th>
+              <th style={{ color: "#000" }}>Total Paid</th>
+              <th style={{ color: "#000" }}>Remaining Amount</th>
+              <th style={{ color: "#000" }}>Created Date</th> {/* New Column */}
             </tr>
           </thead>
           <tbody>
@@ -90,12 +93,15 @@ const SeeClientLoans = () => {
                     {item.name}
                   </Link>
                 </td>
-                <td>{item.nId}</td>
+                <td>{item.regno}</td>
                 <td>{item.loan} Frw</td>
                 <td>{item.months} months</td>
                 <td>{item.paymentWay}</td>
                 <td>{item.amount}</td>
                 <td>{item.status}</td>
+                <td>{item.totalPaid}</td>
+                <td>{item.remainingAmount}</td>
+                <td>{new Date(item.createdAt).toLocaleDateString()}</td> {/* New Column */}
               </tr>
             ))}
           </tbody>

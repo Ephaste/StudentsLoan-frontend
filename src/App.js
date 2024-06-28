@@ -17,6 +17,8 @@ import MemberLayout from './components/shared/MemberLayout';
 import SeeMemberSavings from './pages/funds/SeeMemberSavings';
 import LoansPaid from './pages/loans/LoansPaid.jsx';
 import GettingContacts from './pages/contact/GettingContacts.js';
+import UserUpdate from './pages/members/MemberUpdate.jsx';
+import UpdateSaving from './pages/funds/SavingsUpdate.jsx';
 
 function App() {
   return (
@@ -25,13 +27,9 @@ function App() {
         <Route path="/" element={<PagesLayout />}>
           <Route index element={<Home />} />
           <Route path="/contact" element={<Contact />} />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/applyloan" element={<Apply />} />
-          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />
-          <Route path="/contribute" element={<Contribute />} />
         </Route>
 
         <Route path="" element={<AdminLayout />}>
@@ -39,7 +37,9 @@ function App() {
           <Route path="/loanspage" element={<LoansPage />} />
           <Route path="/savingspage" element={<SavingsPage />} />
           <Route path="/seeallmembers" element={<SeeAllMembers />} />
+          <Route path="/updateuser" element={<UserUpdate />} />
           <Route path='/loansupdate' element ={<LoansUpdate />}/>
+          <Route path='/updatesaving' element ={<UpdateSaving />}/>
           <Route path='/loanspaid' element ={<LoansPaid />}/>
           <Route path='/gettingcontacts' element ={<GettingContacts/>}/>
         </Route>
@@ -48,6 +48,10 @@ function App() {
           <Route path="/dashboardmember" element={<DashboardMember />} />
           <Route path="/loansmemberpage" element={<SeeClientLoans />} />
           <Route path="/savingsmemberpage" element={<SeeMemberSavings />} /> 
+          <Route element={<PrivateRoutes />}>
+            <Route path="/applyloan" element={<Apply />} />
+            <Route path="/contribute" element={<Contribute />} />
+          </Route>
           <Route path='/loanpaying' element ={<LoanPay />}/>
         </Route>
       </Routes>

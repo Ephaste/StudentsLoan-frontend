@@ -7,7 +7,7 @@ import { FcDebt, FcPaid } from "react-icons/fc";
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const SidebarAdmin = () => {
+const SidebarAdmin = ({OpenSidebarToggle, OpenSidebar}) => {
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
@@ -27,12 +27,12 @@ const SidebarAdmin = () => {
   };
 
   return (
-    <aside id='sidebar'>
+    <aside id='sidebar' className={OpenSidebarToggle ? "sidebar-responsive": ""}>
       <div className='sidebar-title'>
         <div className='sidebar-brand'>
           <PiStudentBold size={60} />
         </div>
-        <span className='icon close_icon'>X</span>
+        <span className='icon close_icon' onClick={OpenSidebar}>X</span>
       </div>
       <ul className='sidebar-list'>
         <li className='sidebar-list-item'>
