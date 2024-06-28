@@ -10,7 +10,7 @@ const Apply = () => {
     regno: '',
     loan: '',
     months: '3',
-    paymentMethod: '',
+    paymentWay: '',
     status: 'pending',
   });
   const [amount, setAmount] = useState(0);
@@ -104,7 +104,7 @@ const Apply = () => {
       regno: formData.regno,
       loan: formData.loan,
       months: formData.months,
-      paymentMethod: formData.paymentMethod,
+      paymentWay: formData.paymentWay,
       amount: amount.toString(),
       status: formData.status,
       remainingAmount: loanAmount,
@@ -183,9 +183,9 @@ const Apply = () => {
             <div>
               <p>Choose payment method:</p>
               <select
-                id="paymentMethod"
-                name="paymentMethod"
-                value={formData.paymentMethod}
+                id="paymentWay"
+                name="paymentWay"
+                value={formData.paymentWay}
                 onChange={handleChange}
                 required
               >
