@@ -85,7 +85,7 @@ const Contribute = () => {
           }
         }
       );
-      alert("Contribution successful");
+      alert("Contribution is recorded, Wait for an admin to approve! ");
       window.location.href = "/dashboardmember";
     } catch (error) {
       console.log(error.response);
