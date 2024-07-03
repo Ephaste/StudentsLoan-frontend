@@ -13,7 +13,7 @@ const Register = () => {
     password: '',
     regno: '',
     phone: '',
-    photo: null, // Initialize as null for file
+    photo: null,
   });
 
   const handleChange = (e) => {
@@ -28,9 +28,21 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Password validation
+    // Validation
+    if (/^\d+$/.test(formData.name)) {
+      alert("Name must not be numbers only");
+      return;
+    }
     if (formData.password.length < 6) {
       alert("Password must be at least 6 characters long");
+      return;
+    }
+    if (!/^\d+$/.test(formData.phone)) {
+      alert("Phone number must be digits only");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      alert("Please enter a valid email address");
       return;
     }
 
