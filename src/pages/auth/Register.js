@@ -37,8 +37,8 @@ const Register = () => {
       alert("Password must be at least 6 characters long");
       return;
     }
-    if (!/^\d+$/.test(formData.phone)) {
-      alert("Phone number must be digits only");
+    if (!/^\+?[0-9]+$/.test(formData.phone)) {
+      alert("Phone number must be digits only, with an optional leading '+'");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -99,6 +99,7 @@ const Register = () => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="Enter your phone number"
+              required
             />
             <input
               type="password"
