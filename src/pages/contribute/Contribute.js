@@ -38,7 +38,8 @@ const Contribute = () => {
         setFormData((prevData) => ({
           ...prevData,
           name: response.data.name,
-          phone: response.data.phone
+          phone: response.data.phone,
+          regno: response.data.regno
         }));
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -107,6 +108,7 @@ const Contribute = () => {
               required
               value={formData.name}
               onChange={handleChange}
+              readOnly
             />
             <input
               type="number"
@@ -115,6 +117,7 @@ const Contribute = () => {
               required
               value={formData.regno}
               onChange={handleChange}
+              readOnly
             />
             <input
               type="number"
@@ -123,6 +126,7 @@ const Contribute = () => {
               required
               value={formData.phone}
               onChange={handleChange}
+              readOnly
             />
             <div>
               <p>Number of shares:</p>

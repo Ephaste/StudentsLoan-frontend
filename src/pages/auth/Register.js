@@ -15,6 +15,7 @@ const Register = () => {
     phone: '',
     photo: null,
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +23,13 @@ const Register = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, photo: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file && !["image/jpeg", "image/png"].includes(file.type)) {
+      setErrorMessage("Invalid image format. Please upload a JPEG or PNG file.");
+      return;
+    }
+    setFormData({ ...formData, photo: file });
+    setErrorMessage(""); // Clear error message if the file is valid
   };
 
   const handleSubmit = async (e) => {
@@ -30,19 +37,23 @@ const Register = () => {
 
     // Validation
     if (/^\d+$/.test(formData.name)) {
-      alert("Name must not be numbers only");
+      setErrorMessage("Name must not be numbers only");
       return;
     }
     if (formData.password.length < 6) {
-      alert("Password must be at least 6 characters long");
+      setErrorMessage("Password must be at least 6 characters long");
       return;
     }
     if (!/^\+?[0-9]+$/.test(formData.phone)) {
-      alert("Phone number must be digits only, with an optional leading '+'");
+      setErrorMessage("Phone number must be digits only, with an optional leading '+'");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      alert("Please enter a valid email address");
+      setErrorMessage("Please enter a valid email address");
+      return;
+    }
+    if (!formData.photo) {
+      setErrorMessage("Please upload a photo");
       return;
     }
 
@@ -60,7 +71,11 @@ const Register = () => {
       alert("Account created successfully");
       navigate("/login");
     } catch (error) {
-      console.error(error.response);
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.error || "Registration failed. Please try again.");
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -69,6 +84,7 @@ const Register = () => {
       <Card>
         <div className={styles.form}>
           <h2>Register</h2>
+          {errorMessage && <p className="error-message" style={{color: "red"}}>{errorMessage}</p>}
           <form method="POST" onSubmit={handleSubmit}>
             <input
               type="text"

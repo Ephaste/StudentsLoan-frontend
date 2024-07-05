@@ -68,6 +68,7 @@ const Apply = () => {
         setFormData((prevData) => ({
           ...prevData,
           fullName: response.data.name,
+          regno: response.data.regno,
         }));
         console.log("Fetched user data:", response.data);
       } catch (error) {
@@ -149,6 +150,7 @@ const Apply = () => {
               value={formData.fullName}
               onChange={handleChange}
               required
+              readOnly
             />
             <input
               type="number"
@@ -157,6 +159,7 @@ const Apply = () => {
               value={formData.regno}
               onChange={handleChange}
               required
+              readOnly
             />
             <input
               type="number"
