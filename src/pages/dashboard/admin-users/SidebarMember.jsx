@@ -62,6 +62,11 @@ const SidebarMember = ({OpenSidebarToggle, OpenSidebar}) => {
            </NavLink>
         </li>
         <li className='sidebar-list-item'>
+          <NavLink to=  "/sendmoney" > 
+           <FcDebt className='icon'/>Send Money
+           </NavLink>
+        </li>
+        <li className='sidebar-list-item'>
         <NavLink to="" onClick={handleLogout}>
             <IoLogOutOutline className='icon' />Logout
           </NavLink>

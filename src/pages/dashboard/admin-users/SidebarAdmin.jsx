@@ -56,6 +56,11 @@ const SidebarAdmin = ({OpenSidebarToggle, OpenSidebar}) => {
           </NavLink>
         </li>
         <li className='sidebar-list-item'>
+          <NavLink to="/adminsendmoney"> 
+            <FcDebt className='icon' />Send money
+          </NavLink>
+        </li>
+        <li className='sidebar-list-item'>
           <NavLink to="loanspaid">
             <FcPaid className='icon' />Loans paid
           </NavLink>

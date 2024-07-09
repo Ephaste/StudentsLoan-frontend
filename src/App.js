@@ -19,7 +19,8 @@ import LoansPaid from './pages/loans/LoansPaid.jsx';
 import GettingContacts from './pages/contact/GettingContacts.js';
 import UserUpdate from './pages/members/MemberUpdate.jsx';
 import UpdateSaving from './pages/funds/SavingsUpdate.jsx';
-
+import SendMoney from './pages/loans/SendMoney.jsx';
+import AdminSendMoney from './pages/loans/AdminSendMoney.jsx';
 function App() {
   return (
     <BrowserRouter>
@@ -41,6 +42,7 @@ function App() {
           <Route path='/loansupdate' element ={<LoansUpdate />}/>
           <Route path='/updatesaving' element ={<UpdateSaving />}/>
           <Route path='/loanspaid' element ={<LoansPaid />}/>
+          <Route path='/adminsendmoney' element ={<AdminSendMoney />}/>
           <Route path='/gettingcontacts' element ={<GettingContacts/>}/>
         </Route>
 
@@ -51,6 +53,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/applyloan" element={<Apply />} />
             <Route path="/contribute" element={<Contribute />} />
+            <Route path="/sendmoney" element={<SendMoney />} />
           </Route>
           <Route path='/loanpaying' element ={<LoanPay />}/>
         </Route>
